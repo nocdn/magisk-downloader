@@ -42,7 +42,7 @@ def read_file(filename):
 signal(SIGINT, handler)
 os.system("cls") if 'Windows' in platform.system() else os.system("clear")
 print("""Choose what you would like to download
-[1] Magisk (Manager + Recovery Flashable Zip)
+[1] Magisk
 [2] LSPosed (Zygisk)
 [3] Universal auth files
 Saved links:""")
