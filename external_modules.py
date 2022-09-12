@@ -26,6 +26,9 @@ def reading_data_csv(filename):
     Reads the data from the csv file and returns a header and a list of rows (both as lists)
     Parameters: filename (string) - the name of the file to be read
     """
+    if exists(filename) is False:
+        with open("saved_links.txt", "w+", encoding='utf-8') as tempFile:
+            tempFile.close()
     with open(filename, 'r+', encoding='utf-8') as read_file:
         content = read_file.readlines()
     read_header = content[:1]
