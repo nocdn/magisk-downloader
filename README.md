@@ -1,5 +1,5 @@
 # Automatic magisk downloader
-<h2>This is a simple script to automatically download the latest release of Magisk</h2>
+<h3>This is a simple script to automatically download the latest release of Magisk</h3>
 
 <h2>Current features:</h2>
     
