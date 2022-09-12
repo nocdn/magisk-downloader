@@ -67,7 +67,7 @@ if choice == "1":
     print("\nDownloaded Magisk files")
     print("\n")
 
-    shutil.copyfile(filename, f"./{filename[:-4]}.zip")
+    # shutil.copyfile(filename, f"./{filename[:-4]}.zip")
 
     temp = input("\nPress \033[1mENTER\033[0m to exit\n")
     exit()
