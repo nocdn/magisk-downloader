@@ -26,6 +26,8 @@ def hashing_file(filename):
             sha256_hash.update(byte_block)
         file.close()
     return sha256_hash.hexdigest()
+# https://www.quickprogrammingtips.com/python/how-to-calculate-sha256-hash-of-a-file-in-python.html
+
 
 # sha256_hash = hashlib.sha256()
 # with open(filename,"rb") as file_to_hash:
