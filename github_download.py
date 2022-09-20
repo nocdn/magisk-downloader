@@ -1,6 +1,6 @@
 from signal import signal, SIGINT
 from external_modules import writing_data_csv, reading_data_csv
-from hashlib import sha256
+import hashlib
 import os
 import shutil
 import platform
@@ -14,6 +14,25 @@ def handler(signal_received, frame):
 
 def generate_github_link(repo_url):
     return repo_url.replace("github.com", "api.github.com/repos") + "/releases/latest"
+
+def hashing_file(filename):
+    """
+    Hashing a file
+    Parameters: filename (string) - the name of the file to be hashed
+    """
+    sha256_hash = hashlib.sha256()
+    with open(filename, "rb") as file:
+        for byte_block in iter(lambda: file.read(4096), b""):
+            sha256_hash.update(byte_block)
+        file.close()
+    return sha256_hash.hexdigest()
+
+# sha256_hash = hashlib.sha256()
+# with open(filename,"rb") as file_to_hash:
+#     # Read and update hash string value in blocks of 4K
+#     for byte_block in iter(lambda: file_to_hash.read(4096),b""):
+#         sha256_hash.update(byte_block)
+#     print(sha256_hash.hexdigest())
 
 def append_to_file(filename, data_to_write):
     """
