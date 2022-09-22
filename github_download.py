@@ -27,9 +27,14 @@ def hashing_file(filename_to_hash):
         file.close()
     return sha256_hash.hexdigest()
 
-
-# https://www.quickprogrammingtips.com/python/how-to-calculate-sha256-hash-of-a-file-in-python.html
-
+def check_if_file_exists(filename):
+    """
+    Checking if a file exists
+    Parameters: filename (string) - the name of the file to be checked
+    """
+    if os.path.isfile(filename):
+        return True
+    return False
 
 def append_to_file(filename, data_to_write):
     """
@@ -55,6 +60,8 @@ def read_file(filename):
         file.close()
     return lines_data
 
+
+
 signal(SIGINT, handler)
 os.system("cls") if 'Windows' in platform.system() else os.system("clear")
 print("""Choose what you would like to download
@@ -71,6 +78,12 @@ print("""
 [exit] Exit""")
 choice = input(">>> ")
 if choice == "1":
+    if check_if_file_exists("magisk."):
+        download_choice = input("Magisk already downloaded, do you want to download it again? (y/n) ")
+        if download_choice.lower() == "y":
+            pass
+        else:
+            exit(0)
     response = requests.get('https://api.github.com/repos/topjohnwu/Magisk/releases/latest')
     data = response.json()
     download_url = data["assets"][0]["browser_download_url"]
