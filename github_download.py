@@ -94,8 +94,6 @@ if choice == "1":
 
     open(filename, "wb").write(github_response.content)
     print("\nDownloaded Magisk files")
-    print("\n")
-
     print("Hash: " + hashing_file(filename))
 
     # shutil.copyfile(filename, f"./{filename[:-4]}.zip")
