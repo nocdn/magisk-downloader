@@ -15,26 +15,21 @@ def handler(signal_received, frame):
 def generate_github_link(repo_url):
     return repo_url.replace("github.com", "api.github.com/repos") + "/releases/latest"
 
-def hashing_file(filename):
+def hashing_file(filename_to_hash):
     """
     Hashing a file
     Parameters: filename (string) - the name of the file to be hashed
     """
     sha256_hash = hashlib.sha256()
-    with open(filename, "rb") as file:
+    with open(filename_to_hash, "rb") as file:
         for byte_block in iter(lambda: file.read(4096), b""):
             sha256_hash.update(byte_block)
         file.close()
     return sha256_hash.hexdigest()
+
+
 # https://www.quickprogrammingtips.com/python/how-to-calculate-sha256-hash-of-a-file-in-python.html
 
-
-# sha256_hash = hashlib.sha256()
-# with open(filename,"rb") as file_to_hash:
-#     # Read and update hash string value in blocks of 4K
-#     for byte_block in iter(lambda: file_to_hash.read(4096),b""):
-#         sha256_hash.update(byte_block)
-#     print(sha256_hash.hexdigest())
 
 def append_to_file(filename, data_to_write):
     """
@@ -87,6 +82,8 @@ if choice == "1":
     open(filename, "wb").write(github_response.content)
     print("\nDownloaded Magisk files")
     print("\n")
+
+    print("Hash: " + hashing_file(filename))
 
     # shutil.copyfile(filename, f"./{filename[:-4]}.zip")
 
