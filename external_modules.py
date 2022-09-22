@@ -41,3 +41,13 @@ def reading_data_csv(filename):
         return read_header, read_rows
     else:
         return read_header, read_rows
+
+def finding_magisk_file():
+    """
+    Finds the magisk file in the current directory and returns the name of the file
+    """
+    import os
+    files = os.listdir()
+    for file in files:
+        if file.startswith("Magisk"):
+            return file
