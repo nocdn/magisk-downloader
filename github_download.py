@@ -1,5 +1,5 @@
 from signal import signal, SIGINT
-from external_modules import writing_data_csv, reading_data_csv
+from external_modules import writing_data_csv, reading_data_csv, finding_magisk_file
 import hashlib
 import os
 import shutil
@@ -78,9 +78,9 @@ print("""
 [exit] Exit""")
 choice = input(">>> ")
 if choice == "1":
-    if check_if_file_exists("magisk."):
+    if check_if_file_exists(finding_magisk_file()):
         download_choice = input("Magisk already downloaded, do you want to download it again? (y/n) ")
-        if download_choice.lower() == "y":
+        if download_choice.lower() == "y" or download_choice.lower() == "":
             pass
         else:
             exit(0)
