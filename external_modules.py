@@ -51,3 +51,51 @@ def finding_magisk_file():
     for file in files:
         if file.startswith("Magisk"):
             return file
+
+def generate_github_link(repo_url):
+    return repo_url.replace("github.com", "api.github.com/repos") + "/releases/latest"
+
+def check_if_file_exists(filename):
+    """
+    Checking if a file exists
+    Parameters: filename (string) - the name of the file to be checked
+    """
+    if os.path.isfile(filename):
+        return True
+    return False
+
+def read_file(filename):
+    """
+    Opening a file and reading the contents into a variable called 'lines_data'
+    Parameters:filename (string) - the name of the file to be read
+    """
+    with open(filename, 'r+', encoding='utf-8') as file:
+        lines_data = file.readlines()
+        file.close()
+    return lines_data
+
+def append_to_file(filename, data_to_write):
+    """
+    Appending a line to the end of a file
+    Parameters: filename (string) - the name of the file to be read
+    data_to_write (string) - the line to be appended to the file
+    """
+    with open(filename, "a+", encoding='utf-8') as file_object:
+        file_object.seek(0)
+        reading_data = file_object.read(100)
+        if len(reading_data) > 0 :
+            file_object.write("\n")
+        file_object.write(data_to_write)
+        file_object.close()
+
+def hashing_file(filename_to_hash):
+    """
+    Hashing a file
+    Parameters: filename (string) - the name of the file to be hashed
+    """
+    sha256_hash = hashlib.sha256()
+    with open(filename_to_hash, "rb") as file:
+        for byte_block in iter(lambda: file.read(4096), b""):
+            sha256_hash.update(byte_block)
+        file.close()
+    return sha256_hash.hexdigest()
