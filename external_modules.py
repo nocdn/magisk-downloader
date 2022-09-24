@@ -1,4 +1,4 @@
-import csv
+import csv, hashlib, os
 from os.path import exists
 
 def writing_data_csv(filename, data_to_write):
