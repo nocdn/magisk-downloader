@@ -5,6 +5,10 @@ __pycache__/
 # C extensions
 *.so
 
+# Replit
+.replit
+.replit.nix
+
 # Distribution / packaging
 .Python
 build/
