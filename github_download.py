@@ -29,7 +29,7 @@ print("""
 [exit] Exit""")
 choice = input(">>> ")
 if choice == "1":
-    if check_if_file_exists(finding_magisk_file()):
+    if finding_magisk_file() is not None:
         download_choice = input("Magisk already downloaded, do you want to download it again? (y/n) ")
         if download_choice.lower() == "y" or download_choice.lower() == "":
             pass
