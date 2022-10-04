@@ -32,39 +32,13 @@ if choice == "1":
     if finding_magisk_file() is not None:
         download_choice = input("Magisk already downloaded, do you want to download it again? (y/n) ")
         if download_choice.lower() == "y" or download_choice.lower() == "":
-            pass
+            download_magisk("https://api.github.com/repos/topjohnwu/Magisk/releases/latest")
         else:
             exit(0)
-    download_magisk()
-    # response = requests.get('https://api.github.com/repos/topjohnwu/Magisk/releases/latest')
-    # data = response.json()
-    # download_url = data["assets"][0]["browser_download_url"]
-    # github_response = requests.get(download_url)
-    # text = download_url.split("/")
-    # filename = text[-1]
-    # print(f"Downloading: {filename}")
 
-    # open(filename, "wb").write(github_response.content)
-    # print("\nDownloaded Magisk files")
-    # print("Hash: " + hashing_file(filename))
-
-    # # shutil.copyfile(filename, f"./{filename[:-4]}.zip")
-
-    # temp = input("\nPress \033[1mENTER\033[0m to exit\n")
-    # exit()
 elif choice == "2":
-    response = requests.get('https://api.github.com/repos/LSPosed/LSPosed/releases/latest')
-    data = response.json()
-    download_url = data["assets"][1]["browser_download_url"]
-    github_response = requests.get(download_url)
-    text = download_url.split("/")
-    filename = text[-1]
-    print(f"Downloading: {filename}")
+    download_github('https://api.github.com/repos/LSPosed/LSPosed/releases/latest')
 
-    open(filename, "wb").write(github_response.content)
-    print("Downloaded LSPosed")
-    temp = input("\nPress \033[1mENTER\033[0m to exit\n")
-    exit()
 elif choice == "3":
     response = requests.get('https://api.github.com/repos/null-dev/UniversalAuth/releases/latest')
     data = response.json()
