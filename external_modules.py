@@ -102,8 +102,8 @@ def hashing_file(filename_to_hash):
         file.close()
     return sha256_hash.hexdigest()
 
-def download_magisk():
-    respone = requests.get("https://api.github.com/repos/topjohnwu/Magisk/releases/latest")
+def download_github(api_url):
+    respone = requests.get(api_url)
     if respone.status_code == 200:
         data = respone.json()
         download_url = data["assets"][0]["browser_download_url"]
@@ -112,7 +112,7 @@ def download_magisk():
         filename = text[-1]
         print(f"Downloading {filename}...")
         open(filename, "wb").write(github_response.content)
-        print("\nDownloaded Magisk files")
+        print("\nDownloaded successfully!")
         print("Hash: " + hashing_file(filename))
 
         temp = input("\nPress \033[1mENTER\033[0m to exit\n")
