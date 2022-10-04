@@ -14,4 +14,4 @@
     
 <h2>To-do:</h2>
     
-    - Add option to choose between overwrite/add number to end
+    - Add option to choose between overwrite/append number to end
