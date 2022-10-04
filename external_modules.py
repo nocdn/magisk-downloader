@@ -1,5 +1,7 @@
-import csv, hashlib, os
+import csv, hashlib, os, requests
 from os.path import exists
+
+from requests import request
 
 def writing_data_csv(filename, data_to_write):
     """
@@ -99,3 +101,22 @@ def hashing_file(filename_to_hash):
             sha256_hash.update(byte_block)
         file.close()
     return sha256_hash.hexdigest()
+
+def download_magisk():
+    respone = requests.get("https://api.github.com/repos/topjohnwu/Magisk/releases/latest")
+    if respone.status_code == 200:
+        data = respone.json()
+        download_url = data["assets"][0]["browser_download_url"]
+        github_response = requests.get(download_url)
+        text = download_url.split("/")
+        filename = text[-1]
+        print(f"Downloading {filename}...")
+        open(filename, "wb").write(github_response.content)
+        print("\nDownloaded Magisk files")
+        print("Hash: " + hashing_file(filename))
+
+        temp = input("\nPress \033[1mENTER\033[0m to exit\n")
+        exit()
+    else:
+        return f"Error: {respone.status_code}"
+    
