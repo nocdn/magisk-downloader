@@ -10,8 +10,8 @@
         - Writes the downloaded content to a file with the appropriate name
     - Creates a copy of the file with the same name, but with a .zip extention (to flash in android recovery)
     - Calculates hash of file to make sure download is intact
-    
+    - Checks if the file is already downloaded, and asks if you want to download again
     
 <h2>To-do:</h2>
     
-    - Checks if the file is already downloaded
+    - Add option to choose between overwrite/add number to end
