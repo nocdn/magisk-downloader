@@ -140,3 +140,28 @@ def custom_downloading():
         data_to_save.append(new_string)
         writing_data_csv("saved_links.csv", data_to_save)
         print("\nSaved for later")
+
+def saved_downloading(choice):
+    read_header1, read_rows1 = reading_data_csv("saved_links.csv")
+    for i in range(len(read_rows1)):
+        name, link = read_rows1[i].split(",")
+        if int(choice) == i+4:
+            print(f"Downloading: {name}")
+            github_raw_data = requests.get(link)
+            data = github_raw_data.json()
+            download_url = data["assets"][0]["browser_download_url"]
+            filename = data["assets"][0]["name"]
+            github_response = requests.get(download_url)
+            open(filename, "wb").write(github_response.content)
+            print(f"Downloaded: {filename}")
+            temp = input("\nPress \033[1mENTER\033[0m to exit\n")
+            exit()
+    print(f"Downloading from: {link}")
+    response = requests.get(link)
+    data = response.json()
+    download_url = data["assets"][0]["browser_download_url"]
+    github_response = requests.get(download_url)
+    text = download_url.split("/")
+    filename = text[-1]
+    open(filename, "wb").write(github_response.content)
+    print(f"Downloaded: {filename}")
