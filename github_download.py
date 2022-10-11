@@ -1,11 +1,8 @@
 from signal import signal, SIGINT
 from external_modules import *
-import hashlib
 import os
-import shutil
 import platform
 import requests
-import json
 
 def handler(signal_received, frame):
     # Handling any cleanup here
