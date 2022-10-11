@@ -32,7 +32,7 @@ if choice == "1":
     if finding_magisk_file() is not None:
         download_choice = input("Magisk already downloaded, do you want to download it again? (y/n) ")
         if download_choice.lower() == "y" or download_choice.lower() == "":
-            download_magisk("https://api.github.com/repos/topjohnwu/Magisk/releases/latest")
+            download_github("https://api.github.com/repos/topjohnwu/Magisk/releases/latest")
         else:
             exit(0)
 
