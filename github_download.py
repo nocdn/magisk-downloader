@@ -9,7 +9,7 @@ def handler(signal_received, frame):
     print('\nCTRL-C or SIGINT detected. Exiting gracefully...')
     exit(0)
 
-
+### Main program ###
 signal(SIGINT, handler)
 os.system("cls") if 'Windows' in platform.system() else os.system("clear")
 print("""Choose what you would like to download
@@ -18,8 +18,8 @@ print("""Choose what you would like to download
 [3] Universal auth files
 Saved links:""")
 read_headers, read_rows = reading_data_csv("saved_links.txt")
-for i in range(len(read_rows)):
-    name, link = read_rows[i].split(",")
+for row in range(len(read_rows)):
+    name, link = read_rows[row].split(",")
     print(f"[{i+4}] {name}")
 print("""
 [custom] Add custom URL
