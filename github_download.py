@@ -79,3 +79,24 @@ elif int(choice) > 3:
     saved_downloading(choice)
     temp = input("\nPress \033[1mENTER\033[0m to exit\n")
     exit()
+
+# function that checks if file exists and gives option to ovewrite it or add a number to the end of the file
+def check_file_exists(filename):
+    if os.path.isfile(filename):
+        file_exists = True
+        while file_exists:
+            print(f"{filename} already exists")
+            overwrite = input("Do you want to overwrite it? (y/n) ")
+            if overwrite.lower() == "y" or overwrite.lower() == "":
+                os.remove(filename)
+                file_exists = False
+            elif overwrite.lower() == "n":
+                file_exists = False
+                filename = filename.split(".")
+                filename[0] = filename[0] + "1"
+                filename = ".".join(filename)
+                check_file_exists(filename)
+    return filename
+
+def overwrite_or_numerate(filename):
+    
