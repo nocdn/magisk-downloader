@@ -4,18 +4,18 @@ import platform
 import requests
 from external_modules import *
 
-
-def clear_and_sigint():
-    def handler(signal_received, frame):
+def handler(signal_received, frame):
     # Handling Ctrl+C and exiting gracefully
         print('\nCTRL-C or SIGINT detected. Exiting gracefully...')
         exit(0)
-    signal(SIGINT, handler)
+
+def clear_and_sigint():
     os.system("cls") if 'Windows' in platform.system() else os.system("clear")
 
 
 ### Main program ###
 clear_and_sigint
+signal(SIGINT, handler)
 print("""Choose what you would like to download
 [1] Magisk
 [2] LSPosed (Zygisk)
