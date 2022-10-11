@@ -17,10 +17,10 @@ print("""Choose what you would like to download
 [2] LSPosed (Zygisk)
 [3] Universal auth files
 Saved links:""")
-read_headers, read_rows = reading_data_csv("saved_links.txt")
+read_headers, read_rows = reading_data_csv("saved_links.csv")
 for row in range(len(read_rows)):
     name, link = read_rows[row].split(",")
-    print(f"[{i+4}] {name}")
+    print(f"[{row+4}] {name}")
 print("""
 [custom] Add custom URL
 [exit] Exit""")
@@ -72,14 +72,14 @@ elif choice == "custom":
         data_to_save = []
         data_to_save.append(name)
         data_to_save.append(new_string)
-        writing_data_csv("saved_links.txt", data_to_save)
+        writing_data_csv("saved_links.csv", data_to_save)
         print("\nSaved for later")
     temp = input("\nPress \033[1mENTER\033[0m to exit\n")
     exit()
 elif choice == "exit":
     exit()
 elif int(choice) > 3:
-    read_header1, read_rows1 = reading_data_csv("saved_links.txt")
+    read_header1, read_rows1 = reading_data_csv("saved_links.csv")
     for i in range(len(read_rows1)):
         name, link = read_rows1[i].split(",")
         if int(choice) == i+4:
@@ -93,8 +93,8 @@ elif int(choice) > 3:
             print(f"Downloaded: {filename}")
             temp = input("\nPress \033[1mENTER\033[0m to exit\n")
             exit()
-    print(f"Downloading from: {link[int(choice)-4]}")
-    response = requests.get(link[int(choice)-4])
+    print(f"Downloading from: {link}")
+    response = requests.get(link)
     data = response.json()
     download_url = data["assets"][0]["browser_download_url"]
     github_response = requests.get(download_url)

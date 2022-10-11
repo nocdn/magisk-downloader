@@ -1,1 +1,0 @@
-YT Music Material,https://api.github.com/repos/z-huang/music/releases/latest
