@@ -18,3 +18,4 @@
 <h2>To-do:</h2>
     
     - Add option to choose between overwrite/append number to end
+    - Fix saving links
