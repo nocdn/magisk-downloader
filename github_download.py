@@ -5,7 +5,6 @@ import requests
 from external_modules import *
 
 
-
 def clear_and_sigint():
     def handler(signal_received, frame):
     # Handling Ctrl+C and exiting gracefully
@@ -30,6 +29,7 @@ print("""
 [custom] Add custom URL
 [exit] Exit""")
 choice = input(">>> ")
+
 if choice == "1":
 
     if finding_magisk_file() is not None:
