@@ -1,11 +1,11 @@
 from signal import signal, SIGINT
-from external_modules import *
 import os
 import platform
 import requests
+from external_modules import *
 
 def handler(signal_received, frame):
-    # Handling any cleanup here
+    # Handling Ctrl+C and exiting gracefully
     print('\nCTRL-C or SIGINT detected. Exiting gracefully...')
     exit(0)
 
