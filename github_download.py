@@ -32,6 +32,8 @@ if choice == "1":
             download_github("https://api.github.com/repos/topjohnwu/Magisk/releases/latest")
         else:
             exit(0)
+    else:
+        download_github("https://api.github.com/repos/topjohnwu/Magisk/releases/latest")
 
 elif choice == "2":
     download_github('https://api.github.com/repos/LSPosed/LSPosed/releases/latest')
