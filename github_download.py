@@ -26,6 +26,7 @@ print("""
 [exit] Exit""")
 choice = input(">>> ")
 if choice == "1":
+
     if finding_magisk_file() is not None:
         download_choice = input("Magisk already downloaded, do you want to download it again? (y/n) ")
         if download_choice.lower() == "y" or download_choice.lower() == "":
@@ -36,9 +37,11 @@ if choice == "1":
         download_github("https://api.github.com/repos/topjohnwu/Magisk/releases/latest")
 
 elif choice == "2":
+
     download_github('https://api.github.com/repos/LSPosed/LSPosed/releases/latest')
 
 elif choice == "3":
+
     response = requests.get('https://api.github.com/repos/null-dev/UniversalAuth/releases/latest')
     data = response.json()
     download_url1 = data["assets"][0]["browser_download_url"]
@@ -56,12 +59,16 @@ elif choice == "3":
     print("Downloaded Universal Auth files")
     temp = input("\nPress \033[1mENTER\033[0m to exit\n")
     exit()
+
 elif choice == "custom":
+
     custom_downloading()
     temp = input("\nPress \033[1mENTER\033[0m to exit\n")
     exit()
+
 elif choice == "exit":
     exit()
+    
 elif int(choice) > 3:
     read_header1, read_rows1 = reading_data_csv("saved_links.csv")
     for i in range(len(read_rows1)):
