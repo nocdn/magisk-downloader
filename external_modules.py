@@ -1,4 +1,5 @@
 import csv, hashlib, os, requests
+from genericpath import isfile
 from os.path import exists
 
 from requests import request
@@ -43,6 +44,22 @@ def reading_data_csv(filename):
         return read_header, read_rows
     else:
         return read_header, read_rows
+
+def overwrite_or_enumerate(filename):
+    if os.path.isfile(filename):
+        file_exists = True
+        while file_exists:
+            overwrite = input("Do you want to overwrite it? (y/n) ")
+            if overwrite.lower() == "y" or overwrite.lower() == "":
+                os.remove(filename)
+                file_exists = False
+            elif overwrite.lower() == "n":
+                file_exists = False
+                filename = filename.split(".")
+                filename[0] = filename[0] + "1"
+                filename = ".".join(filename)
+                filename = overwrite_or_enumerate(filename)
+    return filename
 
 def finding_magisk_file():
     """
@@ -179,17 +196,32 @@ def saved_downloading(choice):
             data = github_raw_data.json()
             download_url = data["assets"][0]["browser_download_url"]
             filename = data["assets"][0]["name"]
+            if os.path.isfile(filename):
+                overwrite = input(f"\033[1m{filename}\033[0m already exists. Would you like to overwrite it? (y/n)\n: ")
+                if overwrite.lower == "y" or overwrite == "":
+                    github_response = requests.get(download_url)
+                    open(filename, "wb").write(github_response.content)
+                    print(f"Downloaded: {filename}")
+                    print("Hash: " + hashing_file(filename))
+                    temp = input("\nPress \033[1mENTER\033[0m to exit\n")
+                    exit()
+                else:
+                    filename = filename.split(".")
+                filename[0] = filename[0] + "1"
+                filename = ".".join(filename)
             github_response = requests.get(download_url)
             open(filename, "wb").write(github_response.content)
             print(f"Downloaded: {filename}")
             temp = input("\nPress \033[1mENTER\033[0m to exit\n")
             exit()
-    print(f"Downloading from: {link}")
-    response = requests.get(link)
-    data = response.json()
-    download_url = data["assets"][0]["browser_download_url"]
-    github_response = requests.get(download_url)
-    text = download_url.split("/")
-    filename = text[-1]
-    open(filename, "wb").write(github_response.content)
-    print(f"Downloaded: {filename}")
+    # print(f"Downloading from: {link}")
+    # response = requests.get(link)
+    # data = response.json()
+    # download_url = data["assets"][0]["browser_download_url"]
+    # github_response = requests.get(download_url)
+    # text = download_url.split("/")
+    # filename = text[-1]
+    # open(filename, "wb").write(github_response.content)
+    # print(f"Downloaded: {filename}")
+    # temp = input("\nPress \033[1mENTER\033[0m to exit\n")
+    # exit()
