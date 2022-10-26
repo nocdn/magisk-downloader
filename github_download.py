@@ -98,5 +98,19 @@ def check_file_exists(filename):
                 check_file_exists(filename)
     return filename
 
-# def overwrite_or_numerate(filename):
+def overwrite_or_enumerate(filename):
+    if os.path.isfile(filename):
+        file_exists = True
+        while file_exists:
+            overwrite = input("Do you want to overwrite it? (y/n) ")
+            if overwrite.lower() == "y" or overwrite.lower() == "":
+                os.remove(filename)
+                file_exists = False
+            elif overwrite.lower() == "n":
+                file_exists = False
+                filename = filename.split(".")
+                filename[0] = filename[0] + "1"
+                filename = ".".join(filename)
+                filename = overwrite_or_enumerate(filename)
+    return filename
     
