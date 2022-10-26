@@ -30,6 +30,7 @@ print("""
 [exit] Exit""")
 choice = input(">>> ")
 
+
 if choice == "1":
     if finding_magisk_file() is not None:
         download_choice = input("Magisk already downloaded, do you want to download it again? (y/n) ")
@@ -46,15 +47,11 @@ elif choice == "2":
 elif choice == "3":
     download_github_two_releases('https://api.github.com/repos/null-dev/UniversalAuth/releases/latest')
 
+elif int(choice) > 3:
+    saved_downloading(choice)
+
 elif choice == "custom":
     custom_downloading()
 
 elif choice == "exit":
     exit()
-    
-elif int(choice) > 3:
-    saved_downloading(choice)
-
-
-
-    
