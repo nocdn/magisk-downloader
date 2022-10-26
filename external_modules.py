@@ -45,22 +45,6 @@ def reading_data_csv(filename):
     else:
         return read_header, read_rows
 
-def overwrite_or_enumerate(filename):
-    if os.path.isfile(filename):
-        file_exists = True
-        while file_exists:
-            overwrite = input("Do you want to overwrite it? (y/n) ")
-            if overwrite.lower() == "y" or overwrite.lower() == "":
-                os.remove(filename)
-                file_exists = False
-            elif overwrite.lower() == "n":
-                file_exists = False
-                filename = filename.split(".")
-                filename[0] = filename[0] + "1"
-                filename = ".".join(filename)
-                filename = overwrite_or_enumerate(filename)
-    return filename
-
 def finding_magisk_file():
     """
     Finds the magisk file in the current directory and returns the name of the file
@@ -197,8 +181,8 @@ def saved_downloading(choice):
             download_url = data["assets"][0]["browser_download_url"]
             filename = data["assets"][0]["name"]
             if os.path.isfile(filename):
-                overwrite = input(f"\033[1m{filename}\033[0m already exists. Would you like to overwrite it? (y/n)\n: ")
-                if overwrite.lower == "y" or overwrite == "":
+                overwrite_or_enumerate = input(f"\033[1m{filename}\033[0m already exists. Would you like to overwrite it or enumerate it? (o/e)\n: ")
+                if overwrite_or_enumerate.lower == "o" or overwrite_or_enumerate.lower == "overwrite":
                     github_response = requests.get(download_url)
                     open(filename, "wb").write(github_response.content)
                     print(f"Downloaded: {filename}")
@@ -207,8 +191,8 @@ def saved_downloading(choice):
                     exit()
                 else:
                     filename = filename.split(".")
-                filename[0] = filename[0] + "1"
-                filename = ".".join(filename)
+                    filename[0] = filename[0] + "1"
+                    filename = ".".join(filename)
             github_response = requests.get(download_url)
             open(filename, "wb").write(github_response.content)
             print(f"Downloaded: {filename}")
