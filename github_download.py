@@ -47,29 +47,11 @@ elif choice == "2":
 
 elif choice == "3":
 
-    response = requests.get('https://api.github.com/repos/null-dev/UniversalAuth/releases/latest')
-    data = response.json()
-    download_url1 = data["assets"][0]["browser_download_url"]
-    download_url2 = data["assets"][1]["browser_download_url"]
-    github_response1 = requests.get(download_url1)
-    github_response2 = requests.get(download_url2)
-    text1 = download_url1.split("/")
-    text2 = download_url2.split("/")
-    filename1 = text1[-1]
-    filename2 = text2[-1]
-    print(f"Downloading: {filename1}")
-    print(f"Downloading: {filename2}")
-    open(filename1, "wb").write(github_response1.content)
-    open(filename2, "wb").write(github_response2.content)
-    print("Downloaded Universal Auth files")
-    temp = input("\nPress \033[1mENTER\033[0m to exit\n")
-    exit()
+    download_github_two_releases('https://api.github.com/repos/null-dev/UniversalAuth/releases/latest')
 
 elif choice == "custom":
 
     custom_downloading()
-    temp = input("\nPress \033[1mENTER\033[0m to exit\n")
-    exit()
 
 elif choice == "exit":
     exit()
@@ -114,3 +96,17 @@ def overwrite_or_enumerate(filename):
                 filename = overwrite_or_enumerate(filename)
     return filename
     
+class Downloader:
+    def __init__(self, url, filename):
+        self.url = url
+        self.filename = filename
+        self.filename = overwrite_or_enumerate(self.filename)
+        self.github_response = requests.get(self.url)
+        open(self.filename, "wb").write(self.github_response.content)
+        print(f"Downloaded {self.filename}")
+        self.filename = check_file_exists(self.filename)
+        self.github_response = requests.get(self.url)
+        open(self.filename, "wb").write(self.github_response.content)
+        print(f"Downloaded {self.filename}")
+
+github = Downloader("

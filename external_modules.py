@@ -119,6 +119,29 @@ def download_github(api_url):
         exit()
     else:
         return f"Error: {respone.status_code}"
+
+def download_github_two_releases(api_url):
+    response = requests.get(api_url)
+    data = response.json()
+    download_url1 = data["assets"][0]["browser_download_url"]
+    download_url2 = data["assets"][1]["browser_download_url"]
+    github_response1 = requests.get(download_url1)
+    github_response2 = requests.get(download_url2)
+    text1 = download_url1.split("/")
+    text2 = download_url2.split("/")
+    filename1 = text1[-1]
+    filename2 = text2[-1]
+    print(f"Downloading: {filename1}")
+    print(f"Downloading: {filename2}")
+    open(filename1, "wb").write(github_response1.content)
+    open(filename2, "wb").write(github_response2.content)
+    print(f"\nDownloaded {filename1} successfully!")
+    print(f"Downloaded {filename2} successfully!")
+    print("Hash: " + hashing_file(filename1))
+    print("Hash: " + hashing_file(filename2))
+
+    temp = input("\nPress \033[1mENTER\033[0m to exit\n")
+    exit()
     
 def custom_downloading():
     user_github_url = input("Enter the Github repo URL of the file(s) you would like to download\n: ")
@@ -140,6 +163,11 @@ def custom_downloading():
         data_to_save.append(new_string)
         writing_data_csv("saved_links.csv", data_to_save)
         print("\nSaved for later")
+    else:
+        print("\nNot saved")
+    
+    temp = input("\nPress \033[1mENTER\033[0m to exit\n")
+    exit()
 
 def saved_downloading(choice):
     read_header1, read_rows1 = reading_data_csv("saved_links.csv")
