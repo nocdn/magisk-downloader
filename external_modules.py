@@ -214,14 +214,3 @@ def saved_downloading(choice):
             print(f"Downloaded: {filename}")
             temp = input("\nPress \033[1mENTER\033[0m to exit\n")
             exit()
-    # print(f"Downloading from: {link}")
-    # response = requests.get(link)
-    # data = response.json()
-    # download_url = data["assets"][0]["browser_download_url"]
-    # github_response = requests.get(download_url)
-    # text = download_url.split("/")
-    # filename = text[-1]
-    # open(filename, "wb").write(github_response.content)
-    # print(f"Downloaded: {filename}")
-    # temp = input("\nPress \033[1mENTER\033[0m to exit\n")
-    # exit()
