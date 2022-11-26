@@ -1,8 +1,12 @@
-import csv, hashlib, os, requests
+import csv
+import hashlib
+import os
+import requests
 from genericpath import isfile
 from os.path import exists
 
 from requests import request
+
 
 def writing_data_csv(filename, data_to_write):
     """
@@ -14,15 +18,19 @@ def writing_data_csv(filename, data_to_write):
     if file_exists is False:
         header = ['name', 'link']
         with open(filename, 'w+', newline="", encoding='utf-8') as writing_file:
-            csvwriter1 = csv.writer(writing_file) # 1. create a csvwriter object
-            csvwriter1.writerow(header) # 2. write the header
-            csvwriter1.writerow(data_to_write) # 3. write the rest of the data
-            writing_file.close() # 4. close the file
+            # 1. create a csvwriter object
+            csvwriter1 = csv.writer(writing_file)
+            csvwriter1.writerow(header)  # 2. write the header
+            csvwriter1.writerow(data_to_write)  # 3. write the rest of the data
+            writing_file.close()  # 4. close the file
     else:
         with open(filename, 'a', newline="", encoding='utf-8') as appending_file:
-            csvwriter2 = csv.writer(appending_file) # 1. create a csvwriter object
-            csvwriter2.writerow(data_to_write) # 2. write the row, without the header
-            appending_file.close() # 3. close the file
+            # 1. create a csvwriter object
+            csvwriter2 = csv.writer(appending_file)
+            # 2. write the row, without the header
+            csvwriter2.writerow(data_to_write)
+            appending_file.close()  # 3. close the file
+
 
 def reading_data_csv(filename):
     """
@@ -45,6 +53,7 @@ def reading_data_csv(filename):
     else:
         return read_header, read_rows
 
+
 def finding_magisk_file():
     """
     Finds the magisk file in the current directory and returns the name of the file
@@ -55,8 +64,10 @@ def finding_magisk_file():
         if file.startswith("Magisk"):
             return file
 
+
 def generate_github_link(repo_url):
     return repo_url.replace("github.com", "api.github.com/repos") + "/releases/latest"
+
 
 def check_if_file_exists(filename):
     """
@@ -66,6 +77,7 @@ def check_if_file_exists(filename):
     if os.path.isfile(filename):
         return True
     return False
+
 
 def read_file(filename):
     """
@@ -77,6 +89,7 @@ def read_file(filename):
         file.close()
     return lines_data
 
+
 def append_to_file(filename, data_to_write):
     """
     Appending a line to the end of a file
@@ -86,10 +99,11 @@ def append_to_file(filename, data_to_write):
     with open(filename, "a+", encoding='utf-8') as file_object:
         file_object.seek(0)
         reading_data = file_object.read(100)
-        if len(reading_data) > 0 :
+        if len(reading_data) > 0:
             file_object.write("\n")
         file_object.write(data_to_write)
         file_object.close()
+
 
 def hashing_file(filename_to_hash):
     """
@@ -103,6 +117,7 @@ def hashing_file(filename_to_hash):
         file.close()
     return sha256_hash.hexdigest()
 
+
 def download_github(api_url):
     respone = requests.get(api_url)
     if respone.status_code == 200:
@@ -111,6 +126,19 @@ def download_github(api_url):
         github_response = requests.get(download_url)
         text = download_url.split("/")
         filename = text[-1]
+        if os.path.isfile(filename):
+            overwrite_or_enumerate = input(
+                f"\033[1m{filename}\033[0m already exists. Would you like to overwrite it or enumerate it? (o/e)\n: ")
+            if overwrite_or_enumerate.lower == "o" or overwrite_or_enumerate.lower == "overwrite":
+                open(filename, "wb").write(github_response.content)
+                print(f"Downloaded: {filename}")
+                print("Hash: " + hashing_file(filename))
+                temp = input("\nPress \033[1mENTER\033[0m to exit\n")
+                exit()
+            else:
+                filename = filename.split(".")
+                filename[filename[(len(filename) - len(filename) + 1)]] = filename[filename[(len(filename) - len(filename) + 1)]] + " (1)"
+                filename = ".".join(filename)
         print(f"Downloading {filename}...")
         open(filename, "wb").write(github_response.content)
         print("\nDownloaded successfully!")
@@ -120,6 +148,7 @@ def download_github(api_url):
         exit()
     else:
         return f"Error: {respone.status_code}"
+
 
 def download_github_two_releases(api_url):
     response = requests.get(api_url)
@@ -143,9 +172,11 @@ def download_github_two_releases(api_url):
 
     temp = input("\nPress \033[1mENTER\033[0m to exit\n")
     exit()
-    
+
+
 def custom_downloading():
-    user_github_url = input("Enter the Github repo URL of the file(s) you would like to download\n: ")
+    user_github_url = input(
+        "Enter the Github repo URL of the file(s) you would like to download\n: ")
     new_string = generate_github_link(user_github_url)
     print("Downloading...")
     response = requests.get(new_string)
@@ -158,7 +189,8 @@ def custom_downloading():
     print(f"Downloaded: {filename}")
     save_choice = input("\nWould you like to save this for later? (y/n)\n: ")
     if save_choice == "y":
-        name = input("\nWhat do you want to save the file as (to show in the list)?\n: ")
+        name = input(
+            "\nWhat do you want to save the file as (to show in the list)?\n: ")
         data_to_save = []
         data_to_save.append(name)
         data_to_save.append(new_string)
@@ -166,9 +198,10 @@ def custom_downloading():
         print("\nSaved for later")
     else:
         print("\nNot saved")
-    
+
     temp = input("\nPress \033[1mENTER\033[0m to exit\n")
     exit()
+
 
 def saved_downloading(choice):
     read_header1, read_rows1 = reading_data_csv("saved_links.csv")
@@ -181,7 +214,8 @@ def saved_downloading(choice):
             download_url = data["assets"][0]["browser_download_url"]
             filename = data["assets"][0]["name"]
             if os.path.isfile(filename):
-                overwrite_or_enumerate = input(f"\033[1m{filename}\033[0m already exists. Would you like to overwrite it or enumerate it? (o/e)\n: ")
+                overwrite_or_enumerate = input(
+                    f"\033[1m{filename}\033[0m already exists. Would you like to overwrite it or enumerate it? (o/e)\n: ")
                 if overwrite_or_enumerate.lower == "o" or overwrite_or_enumerate.lower == "overwrite":
                     github_response = requests.get(download_url)
                     open(filename, "wb").write(github_response.content)
@@ -191,7 +225,7 @@ def saved_downloading(choice):
                     exit()
                 else:
                     filename = filename.split(".")
-                    filename[0] = filename[0] + "1"
+                    filename[filename[(len(filename) - len(filename) + 1)]] = filename[filename[(len(filename) - len(filename) + 1)]] + " (1)"
                     filename = ".".join(filename)
             github_response = requests.get(download_url)
             open(filename, "wb").write(github_response.content)
