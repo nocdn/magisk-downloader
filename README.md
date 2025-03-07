@@ -1,9 +1,9 @@
-# Automatic Magisk Downloader
-
-> a simple script to automatically download the latest release of Magisk (and other files)
+# automatic magisk downloader
 
 > [!IMPORTANT]  
 > this project is now archived, as I do not use magisk
+
+> a simple script to automatically download the latest release of Magisk (and other files)
 
 ### Current Features:
 
